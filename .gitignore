@@ -1,0 +1,13 @@
+
+# Node.js and Grafana plugin dependencies
+node_modules/
+dist/
+
+# Temporary and downloaded datasets
+data/raw/
+data/cache/
+
+# Secrets and local environment configuration
+.env
+.env.*
+!.env.example
