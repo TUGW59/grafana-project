@@ -1,0 +1,59 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "id": 1,
+      "type": "samirapordugan-bloomatlasstory-panel",
+      "title": "Flower Story",
+      "gridPos": {
+        "h": 21,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "options": {
+        "demoMode": true
+      },
+      "targets": []
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 42,
+  "tags": [
+    "BloomAtlas",
+    "demo"
+  ],
+  "templating": {
+    "list": [
+      {
+        "name": "flowerId",
+        "label": "Flower ID",
+        "type": "textbox",
+        "hide": 2,
+        "query": "iris-germanica",
+        "current": {
+          "text": "iris-germanica",
+          "value": "iris-germanica",
+          "selected": true
+        },
+        "options": [],
+        "skipUrlSync": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timezone": "browser",
+  "title": "Flower Story Dev",
+  "uid": "bloomatlas-story-dev",
+  "version": 1
+}
