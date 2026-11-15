@@ -5,7 +5,7 @@ export interface FlowerStoryRecord {
   storyTitle: string; fictionalStory: string;
 }
 export const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] as const;
-export const FLOWER_STORIES: ReadonlyArray<FlowerStoryRecord> = [
+export const FLOWER_STORIES: readonly FlowerStoryRecord[] = [
   {flowerId: "iris-germanica",scientificName: "Iris germanica",commonName: "Bearded Iris",country: "Türkiye",continent: "Asia",demoBiome: "Temperate grassland",demoObservationMonth: 4,accent: "#b58ae6",symbol: "🌸",storyTitle: "A purple message",fictionalStory: "In an imagined hillside garden, the iris marks the beginning of a journey between places and memories."},
   {flowerId: "rosa-canina",scientificName: "Rosa canina",commonName: "Dog Rose",country: "United Kingdom",continent: "Europe",demoBiome: "Temperate forest",demoObservationMonth: 6,accent: "#f18ab4",symbol: "🌹",storyTitle: "The path by the hedgerow",fictionalStory: "In this fictional vignette, a wild rose quietly guards a path travelers once took."},
   {flowerId: "lavandula-angustifolia",scientificName: "Lavandula angustifolia",commonName: "English Lavender",country: "France",continent: "Europe",demoBiome: "Mediterranean",demoObservationMonth: 7,accent: "#8f8bdd",symbol: "🪻",storyTitle: "An evening in violet",fictionalStory: "A lavender field becomes the setting for a creative story about scents that call old memories to mind."},

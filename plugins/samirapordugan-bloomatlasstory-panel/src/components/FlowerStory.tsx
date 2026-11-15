@@ -74,7 +74,7 @@ export function FlowerStory({ flowerId, width, height, demoMode }: Props) {
                   </div>
                 ))}
               </div>
-              <p className={styles.warning}>Highlighted month belongs to fictional demo data. It does NOT establish the species' flowering season.</p>
+              <p className={styles.warning}>Highlighted month belongs to fictional demo data. It does NOT establish the species&apos; flowering season.</p>
             </section>
             <section className={styles.section}>
               <h2 className={styles.heading}>Botanical & cultural references</h2>
