@@ -1,59 +1,30 @@
 {
-  "annotations": {
-    "list": []
-  },
+  "title": "Flower Story Dev",
+  "uid": "bloomatlas-story-dev",
   "editable": true,
-  "fiscalYearStartMonth": 0,
-  "graphTooltip": 0,
-  "id": null,
-  "links": [],
-  "panels": [
-    {
-      "id": 1,
-      "type": "samirapordugan-bloomatlasstory-panel",
-      "title": "Flower Story",
-      "gridPos": {
-        "h": 21,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "options": {
-        "demoMode": true
-      },
-      "targets": []
-    }
-  ],
-  "refresh": "",
   "schemaVersion": 42,
-  "tags": [
-    "BloomAtlas",
-    "demo"
-  ],
+  "tags": ["BloomAtlas"],
+  "time": { "from": "now-6h", "to": "now" },
   "templating": {
     "list": [
       {
         "name": "flowerId",
         "label": "Flower ID",
         "type": "textbox",
-        "hide": 2,
-        "query": "iris-germanica",
-        "current": {
-          "text": "iris-germanica",
-          "value": "iris-germanica",
-          "selected": true
-        },
-        "options": [],
-        "skipUrlSync": false
+        "query": "rosa-canina",
+        "current": { "text": "rosa-canina", "value": "rosa-canina" },
+        "options": [{ "selected": true, "text": "rosa-canina", "value": "rosa-canina" }],
+        "hide": 0
       }
     ]
   },
-  "time": {
-    "from": "now-6h",
-    "to": "now"
-  },
-  "timezone": "browser",
-  "title": "Flower Story Dev",
-  "uid": "bloomatlas-story-dev",
-  "version": 1
+  "panels": [
+    {
+      "id": 1,
+      "type": "samirapordugan-bloomatlasstory-panel",
+      "title": "Flower Story",
+      "gridPos": { "h": 26, "w": 24, "x": 0, "y": 0 },
+      "options": { "showSources": true }
+    }
+  ]
 }
