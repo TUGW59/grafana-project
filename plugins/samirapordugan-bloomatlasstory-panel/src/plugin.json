@@ -1,15 +1,13 @@
 {
   "$schema": "https://raw.githubusercontent.com/grafana/grafana/main/docs/sources/developers/plugins/plugin.schema.json",
   "type": "panel",
-  "name": "BloomAtlasFlowerStory",
+  "name": "Bloomatlasstory",
   "id": "samirapordugan-bloomatlasstory-panel",
   "info": {
-    "keywords": [
-      "panel"
-    ],
-    "description": "BloomAtlas Flower Story detail panel; demo data only.",
+    "keywords": ["panel"],
+    "description": "",
     "author": {
-      "name": "BloomAtlas team"
+      "name": "Samirapordugan"
     },
     "logos": {
       "small": "img/logo.svg",

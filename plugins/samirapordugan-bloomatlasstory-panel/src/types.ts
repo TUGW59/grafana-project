@@ -1,1 +1,7 @@
-export interface StoryOptions { demoMode?: boolean }
+type SeriesSize = 'sm' | 'md' | 'lg';
+
+export interface SimpleOptions {
+  text: string;
+  showSeriesCount: boolean;
+  seriesCountSize: SeriesSize;
+}
