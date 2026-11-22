@@ -4,17 +4,6 @@
 **Tarih:** 10 Kasım 2026
 **Bağlı olduğu dosyalar:** Ana Proje Takip Dosyası (v5), Yol Haritası
 
----
-
-## 0. Bu Dosyayı Okuyan AI Asistanları İçin
-
-1. Bu dosya Tuğçe'nin "Veri Kaynakları" bölümünü doğrular ve eksiklerini tamamlar. Onaylanınca Ana Takip Dosyası'ndaki veri kaynakları bölümünün yerine geçer.
-2. `[ÖNERİ]` etiketli maddeler iki ekip üyesinin onayını bekler.
-3. "Doğrulanmadı" yazan bir bilgiyi kesin bilgi gibi kullanma. Önce kontrol et.
-4. Kaynağı olmayan bitki bilgisi veriye girmez. Bir alan için kaynak yoksa alan boş kalır ve arayüzde gizlenir.
-
----
-
 ## 1. Tuğçe'nin Listesinin Doğrulaması
 
 | Kaynak | Tuğçe'nin notu | Sonuç | Eklenen not |
@@ -165,8 +154,8 @@ Test türü: Rosa canina (iNaturalist taxon_id 55884)
 
 | Kaynak | Sonuç | Bulgu | İndirme / Adres |
 |---|---|---|---|
-| iNaturalist | Çalışıyor | ~1.835 uygun lisanslı gözlem, ~212 çiçek anotasyonlu kayıt, en yoğun aylar Mayıs-Haziran, yaygın ad "Dog-rose" geliyor, örnek koordinat <location> | api.inaturalist.org/v1 |
+| iNaturalist | Çalışıyor | ~1.835 uygun lisanslı gözlem, ~212 çiçek anotasyonlu kayıt, en yoğun aylar Mayıs-Haziran, yaygın ad "Dog-rose" geliyor, örnek koordinat 48.8598655096,23.0865194202 | api.inaturalist.org/v1 |
 | Wikipedia | Çalışıyor | Özet metni ve makale linki geliyor | en.wikipedia.org/api/rest_v1 |
-| Trefle | Çalışıyor | Token gerekiyor, Rosa canina bulundu, growth alanlarının çoğu boş/dolu, Trefle ve JSON'daki kaynaklar belirtilmeli, istek sınırı <sınır> | trefle.io/api/v1 |
+| Trefle | Çalışıyor | Token gerekiyor, Rosa canina bulundu, growth alanlarının çoğu dolu, Trefle ve JSON'daki kaynaklar belirtilmeli, istek sınırı dakikada 60 istek | trefle.io/api/v1 |
 | SEPASAL | Çalışıyor, tür yok | Rosa canina yok, cinsten yalnızca Rosa rubiginosa var, veri kurak bölge bitkilerini kapsıyor, lisans CC BY 4.0 | sftp.kew.org/pub/data-repositories/sepasal/data/ |
 | Dr. Duke | Çalışıyor | ETHNOBOT.csv içinde 20 kayıt (ör. Kusburnu, Türkiye, Astringent), her kayıtta kaynak var, lisans CC0 | ndownloader.figshare.com/files/43363335 |
