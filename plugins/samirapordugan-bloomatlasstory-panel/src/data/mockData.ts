@@ -1,0 +1,90 @@
+import { Observation, Species } from './model';
+
+const DUKE_URL =
+  'https://agdatacommons.nal.usda.gov/articles/Dr_Duke_s_Phytochemical_and_Ethnobotanical_Databases/24660351';
+
+export const MOCK_SPECIES: Species[] = [
+  {
+    id: 'rosa-canina',
+    commonName: 'Dog-rose',
+    scientificName: 'Rosa canina',
+    family: 'Rosaceae',
+    continents: ['Europe'],
+    bloomMonths: [4, 5, 6, 7],
+    inatTaxonId: 55884,
+    habitat: null,
+    cultivation: null,
+    culturalStory: null,
+    traditionalUse: {
+      summary: 'Recorded as astringent in Turkey, where it is called Kusburnu.',
+      category: 'Astringent',
+      usedPart: null,
+      sourceName: "Dr. Duke's Ethnobotanical Database (reference: Steinmetz)",
+      sourceUrl: DUKE_URL,
+      verified: true,
+    },
+    sources: [
+      { name: 'iNaturalist', url: 'https://www.inaturalist.org/taxa/55884', license: 'Photos CC BY' },
+      { name: "Dr. Duke's Phytochemical and Ethnobotanical Databases", url: DUKE_URL, license: 'CC0' },
+    ],
+  },
+  {
+    id: 'protea-cynaroides',
+    commonName: 'King Protea',
+    scientificName: 'Protea cynaroides',
+    family: 'Proteaceae',
+    continents: ['Africa'],
+    bloomMonths: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    inatTaxonId: 132848,
+    habitat: null,
+    cultivation: null,
+    culturalStory: null,
+    traditionalUse: null,
+    sources: [{ name: 'iNaturalist', url: 'https://www.inaturalist.org/taxa/132848', license: 'Photos CC BY' }],
+  },
+  {
+    id: 'passiflora-caerulea',
+    commonName: 'Bluecrown passionflower',
+    scientificName: 'Passiflora caerulea',
+    family: 'Passifloraceae',
+    continents: ['South America'],
+    bloomMonths: [1, 2, 3, 4, 5, 8, 9, 10, 11, 12],
+    inatTaxonId: 51454,
+    habitat: null,
+    cultivation: null,
+    culturalStory: null,
+    traditionalUse: null,
+    sources: [{ name: 'iNaturalist', url: 'https://www.inaturalist.org/taxa/51454', license: 'Photos CC BY' }],
+  },
+];
+
+export const MOCK_OBSERVATIONS: Observation[] = [
+  {
+    id: 'inat-48467812',
+    speciesId: 'rosa-canina',
+    latitude: 48.0656870423,
+    longitude: 16.294707176,
+    observedAt: '2020-05-27',
+    month: 5,
+    country: 'Austria',
+    continent: 'Europe',
+    photoUrl: 'https://inaturalist-open-data.s3.amazonaws.com/photos/76900043/medium.jpeg',
+    photoLicense: 'CC BY',
+    photoAttribution: '(c) Patrick Hacker, some rights reserved (CC BY)',
+    sourceUrl: 'https://www.inaturalist.org/observations/48467812',
+  },
+  {
+    id: 'inat-23712028',
+    speciesId: 'protea-cynaroides',
+    latitude: -33.9851887506,
+    longitude: 18.4196823624,
+    observedAt: '2019-02-10',
+    month: 2,
+    country: 'South Africa',
+    continent: 'Africa',
+    photoUrl: 'https://inaturalist-open-data.s3.amazonaws.com/photos/36690674/medium.jpeg',
+    photoLicense: 'CC BY',
+    photoAttribution: '(c) Jeremy Gilmore, some rights reserved (CC BY)',
+    sourceUrl: 'https://www.inaturalist.org/observations/23712028',
+  },
+];
