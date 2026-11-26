@@ -1,0 +1,47 @@
+services:
+  # Kaynak: doğrulanmış 12 kayıtlık KURGUSAL demo snapshot. Gerçek botanik verisi değil.
+  api:
+    image: denoland/deno:2.9.8
+    working_dir: /workspace
+    command:
+      - run
+      - --allow-read
+      - --allow-env=BLOOMATLAS_PORT,BLOOMATLAS_HOST
+      - --allow-net=0.0.0.0:8000
+      - api/src/main.ts
+    environment:
+      BLOOMATLAS_HOST: "0.0.0.0"
+      BLOOMATLAS_PORT: "8000"
+    volumes:
+      - ../../:/workspace:ro
+    ports:
+      - "127.0.0.1:18181:8000"
+    restart: "no"
+
+  # Ayrı Grafana: 3100'deki önceki demo konteyneri değiştirilmez.
+  grafana:
+    image: grafana/grafana-enterprise:13.2.4-ubuntu
+    depends_on:
+      - api
+    ports:
+      - "127.0.0.1:3200:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: "admin"
+      GF_SECURITY_ADMIN_PASSWORD: "${BLOOMATLAS_ADMIN_PASSWORD:?Parola tanımlanmadı}"
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Viewer"
+      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: "tugcetopuz-bloomatlasworld-panel,samirapordugan-bloomatlasstory-panel"
+      # Infinity sürümü sabit: sonuçlar farklı makinelerde karşılaştırılabilir.
+      GF_PLUGINS_PREINSTALL_SYNC: "yesoreyeram-infinity-datasource@3.8.0"
+      GF_LOG_LEVEL: "info"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ../../plugins/tugcetopuz-bloomatlasworld-panel/dist:/var/lib/grafana/plugins/tugcetopuz-bloomatlasworld-panel:ro
+      - ../../plugins/samirapordugan-bloomatlasstory-panel/dist:/var/lib/grafana/plugins/samirapordugan-bloomatlasstory-panel:ro
+      - ./provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./dashboards:/var/lib/grafana/dashboards:ro
+    restart: "no"
+volumes:
+  # Yalnız bloomatlas-m2 projesine ait yeni Grafana verisi.
+  grafana_data:

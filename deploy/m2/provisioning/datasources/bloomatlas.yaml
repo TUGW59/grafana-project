@@ -1,0 +1,12 @@
+apiVersion: 1
+datasources:
+  - name: BloomAtlas Infinity (M2 Demo)
+    uid: bloomatlas-infinity
+    type: yesoreyeram-infinity-datasource
+    access: proxy
+    isDefault: false
+    editable: false
+    jsonData:
+      auth_method: none
+      allowedHosts:
+        - http://api:8000

@@ -1,0 +1,6 @@
+{
+  "tasks": {
+    "check": "deno check src/app.ts src/main.ts tests/api_test.ts",
+    "test": "deno test --allow-read tests/"
+  }
+}

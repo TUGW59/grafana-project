@@ -1,0 +1,154 @@
+{
+  "uid": "bloomatlas-m2-proof",
+  "title": "BloomAtlas M2 Data Pipeline — DEMO ONLY",
+  "schemaVersion": 42,
+  "version": 1,
+  "refresh": "",
+  "tags": [
+    "bloomatlas",
+    "m2",
+    "demo-only"
+  ],
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "id": 1,
+      "title": "API → Infinity → DataFrame: all 12 fictional observations",
+      "type": "table",
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "bloomatlas-infinity"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "bloomatlas-infinity"
+          },
+          "type": "json",
+          "source": "url",
+          "parser": "backend",
+          "format": "table",
+          "root_selector": "items",
+          "url": "http://api:8000/v1/observations?limit=50",
+          "columns": [
+            {
+              "selector": "id",
+              "text": "Observation ID",
+              "type": "string"
+            },
+            {
+              "selector": "speciesId",
+              "text": "Species ID",
+              "type": "string"
+            },
+            {
+              "selector": "country",
+              "text": "Country",
+              "type": "string"
+            },
+            {
+              "selector": "continent",
+              "text": "Continent",
+              "type": "string"
+            },
+            {
+              "selector": "observationMonth",
+              "text": "Observation month (DEMO)",
+              "type": "number"
+            },
+            {
+              "selector": "latitude",
+              "text": "Latitude",
+              "type": "number"
+            },
+            {
+              "selector": "longitude",
+              "text": "Longitude",
+              "type": "number"
+            }
+          ],
+          "url_options": {
+            "method": "GET"
+          }
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 12
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
+    },
+    {
+      "id": 2,
+      "title": "Server-side AND filter: Europe + June + Rosa canina (1 row)",
+      "type": "table",
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "bloomatlas-infinity"
+      },
+      "targets": [
+        {
+          "refId": "B",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "bloomatlas-infinity"
+          },
+          "type": "json",
+          "source": "url",
+          "parser": "backend",
+          "format": "table",
+          "root_selector": "items",
+          "url": "http://api:8000/v1/observations?continent=Europe&month=6&speciesId=rosa-canina",
+          "columns": [
+            {
+              "selector": "speciesId",
+              "text": "Species ID",
+              "type": "string"
+            },
+            {
+              "selector": "country",
+              "text": "Country",
+              "type": "string"
+            },
+            {
+              "selector": "observationMonth",
+              "text": "Month",
+              "type": "number"
+            }
+          ],
+          "url_options": {
+            "method": "GET"
+          }
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 12,
+        "w": 24,
+        "h": 12
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
+    }
+  ]
+}
