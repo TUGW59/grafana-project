@@ -1,0 +1,277 @@
+{
+  "uid": "bloomatlas-world-preview",
+  "title": "BloomAtlas · World Explorer (Local candidate)",
+  "schemaVersion": 42,
+  "version": 1,
+  "tags": [
+    "bloomatlas",
+    "local-candidate",
+    "not-publication-approved"
+  ],
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "templating": {
+    "list": [
+      {
+        "name": "continent",
+        "label": "continent",
+        "type": "textbox",
+        "query": "__all__",
+        "current": {
+          "text": "__all__",
+          "value": "__all__"
+        },
+        "options": [],
+        "hide": 2,
+        "skipUrlSync": false
+      },
+      {
+        "name": "biome",
+        "label": "biome",
+        "type": "textbox",
+        "query": "__all__",
+        "current": {
+          "text": "__all__",
+          "value": "__all__"
+        },
+        "options": [],
+        "hide": 2,
+        "skipUrlSync": false
+      },
+      {
+        "name": "month",
+        "label": "month",
+        "type": "textbox",
+        "query": "__all__",
+        "current": {
+          "text": "__all__",
+          "value": "__all__"
+        },
+        "options": [],
+        "hide": 2,
+        "skipUrlSync": false
+      },
+      {
+        "name": "species",
+        "label": "species",
+        "type": "textbox",
+        "query": "__all__",
+        "current": {
+          "text": "__all__",
+          "value": "__all__"
+        },
+        "options": [],
+        "hide": 2,
+        "skipUrlSync": false
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "type": "tugcetopuz-bloomatlasworld-panel",
+      "title": "BloomAtlas · Local candidate",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 45
+      },
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "bloomatlas-infinity"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "bloomatlas-infinity"
+          },
+          "type": "json",
+          "source": "url",
+          "parser": "backend",
+          "format": "table",
+          "root_selector": "items",
+          "url": "http://api:8000/v1/observations?limit=200&continent=${continent:percentencode}&biome=${biome:percentencode}&month=${month:percentencode}&speciesId=${species:percentencode}",
+          "url_options": {
+            "method": "GET"
+          },
+          "columns": [
+            {
+              "selector": "id",
+              "text": "id",
+              "type": "string"
+            },
+            {
+              "selector": "speciesId",
+              "text": "speciesId",
+              "type": "string"
+            },
+            {
+              "selector": "country",
+              "text": "country",
+              "type": "string"
+            },
+            {
+              "selector": "continent",
+              "text": "continent",
+              "type": "string"
+            },
+            {
+              "selector": "biome",
+              "text": "biome",
+              "type": "string"
+            },
+            {
+              "selector": "observationMonth",
+              "text": "observationMonth",
+              "type": "number"
+            },
+            {
+              "selector": "latitude",
+              "text": "latitude",
+              "type": "number"
+            },
+            {
+              "selector": "longitude",
+              "text": "longitude",
+              "type": "number"
+            },
+            {
+              "selector": "observedAt",
+              "text": "observedAt",
+              "type": "string"
+            },
+            {
+              "selector": "photoUrl",
+              "text": "photoUrl",
+              "type": "string"
+            },
+            {
+              "selector": "photoLicense",
+              "text": "photoLicense",
+              "type": "string"
+            },
+            {
+              "selector": "photoAttribution",
+              "text": "photoAttribution",
+              "type": "string"
+            },
+            {
+              "selector": "observer",
+              "text": "observer",
+              "type": "string"
+            },
+            {
+              "selector": "observationLicense",
+              "text": "observationLicense",
+              "type": "string"
+            },
+            {
+              "selector": "sourceUrl",
+              "text": "sourceUrl",
+              "type": "string"
+            },
+            {
+              "selector": "photoSourceUrl",
+              "text": "photoSourceUrl",
+              "type": "string"
+            },
+            {
+              "selector": "ecoregion",
+              "text": "ecoregion",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "refId": "B",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "bloomatlas-infinity"
+          },
+          "type": "json",
+          "source": "url",
+          "parser": "backend",
+          "format": "table",
+          "root_selector": "items",
+          "url": "http://api:8000/v1/species?limit=200",
+          "url_options": {
+            "method": "GET"
+          },
+          "columns": [
+            {
+              "selector": "id",
+              "text": "id",
+              "type": "string"
+            },
+            {
+              "selector": "scientificName",
+              "text": "scientificName",
+              "type": "string"
+            },
+            {
+              "selector": "commonName",
+              "text": "commonName",
+              "type": "string"
+            },
+            {
+              "selector": "family",
+              "text": "family",
+              "type": "string"
+            },
+            {
+              "selector": "taxonomyUrl",
+              "text": "taxonomyUrl",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "refId": "C",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "bloomatlas-infinity"
+          },
+          "type": "json",
+          "source": "url",
+          "parser": "backend",
+          "format": "table",
+          "root_selector": "items",
+          "url": "http://api:8000/v1/preview-options",
+          "url_options": {
+            "method": "GET"
+          },
+          "columns": [
+            {
+              "selector": "kind",
+              "text": "kind",
+              "type": "string"
+            },
+            {
+              "selector": "value",
+              "text": "value",
+              "type": "string"
+            },
+            {
+              "selector": "label",
+              "text": "label",
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "options": {
+        "demoMode": false,
+        "candidateMode": true
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      }
+    }
+  ]
+}

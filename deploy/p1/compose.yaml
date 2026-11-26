@@ -1,0 +1,34 @@
+# Yerel önizleme: 3200 demo projesinden ayrı ağ ve volume.
+services:
+  api:
+    image: denoland/deno:2.9.8
+    user: "${BLOOMATLAS_UID:?UID gerekli}:${BLOOMATLAS_GID:?GID gerekli}"
+    working_dir: /workspace
+    command: [run, --allow-read=/private/preview.json, --allow-net=0.0.0.0:8000, api/src/preview.ts, /private/preview.json]
+    environment:
+      DENO_DIR: /tmp/deno
+    volumes:
+      - ../../:/workspace:ro
+      - ${BLOOMATLAS_PREVIEW_DIR:?Aday dizini gerekli}/preview.json:/private/preview.json:ro
+    ports:
+      - "127.0.0.1:18182:8000"
+  grafana:
+    image: grafana/grafana-enterprise:13.2.4-ubuntu
+    depends_on: [api]
+    ports:
+      - "127.0.0.1:3300:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: "${BLOOMATLAS_P1_PASSWORD:?Parola gerekli}"
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: tugcetopuz-bloomatlasworld-panel
+      GF_PLUGINS_PREINSTALL_SYNC: "yesoreyeram-infinity-datasource@3.8.0"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ${BLOOMATLAS_PREVIEW_DIR:?Aday dizini gerekli}/world-dist:/var/lib/grafana/plugins/tugcetopuz-bloomatlasworld-panel:ro
+      - ./provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./dashboards:/var/lib/grafana/dashboards:ro
+volumes:
+  grafana_data:

@@ -1,0 +1,10 @@
+apiVersion: 1
+providers:
+  - name: BloomAtlas P1 Local Candidate
+    orgId: 1
+    folder: BloomAtlas P1 Local Candidate
+    type: file
+    allowUiUpdates: false
+    updateIntervalSeconds: 20
+    options:
+      path: /var/lib/grafana/dashboards

@@ -26,7 +26,7 @@ export interface Species {
   family: string;
   continents: string[];
   bloomMonths: number[];
-  inatTaxonId: number;
+  inatTaxonId: number | null;
   habitat: string | null;
   cultivation: Cultivation | null;
   culturalStory: string | null;

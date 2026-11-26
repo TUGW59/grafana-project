@@ -1,0 +1,11 @@
+import { botanicalProfiles, matchProfile } from '../data/botanicalProfiles';
+import { rankNeighbors } from './bloomOracle';
+const rose = botanicalProfiles[0];
+const tulip = botanicalProfiles[2];
+it('contains unique sourced profiles for twenty-four species', () => { expect(new Set(botanicalProfiles.map(p => p.id)).size).toBe(24); expect(botanicalProfiles.every(p => p.taxonomyUrl.startsWith('https://powo.science.kew.org/taxon/'))).toBe(true); });
+it('excludes the query and duplicate IDs and returns at most three', () => { const rows = rankNeighbors(rose, [...botanicalProfiles, ...botanicalProfiles]); expect(rows).toHaveLength(3); expect(new Set(rows.map(r => r.profile.id)).size).toBe(3); expect(rows.some(r => r.profile.id === rose.id)).toBe(false); });
+it('produces deterministic ranks and bounded scores', () => { const rows = rankNeighbors(rose, botanicalProfiles); expect(rows).toEqual(rankNeighbors(rose, [...botanicalProfiles].reverse())); expect(rows.every(r => r.similarity > 0 && r.similarity <= 1 && r.coverage <= 1)).toBe(true); });
+it('does not treat cultivated origin as a wild native region', () => { const rows = rankNeighbors(tulip, botanicalProfiles); expect(rows.length).toBeGreaterThan(0); expect(rows.every(r => r.coverage === 7 / 8 && r.evidence.length === 3)).toBe(true); });
+it('does not silently match a taxon with changed identity', () => { expect(matchProfile(rose.id, rose.scientificName, 'Wrong', rose.taxonomyUrl)).toBeUndefined(); expect(matchProfile(rose.id, rose.scientificName, rose.family, rose.taxonomyUrl)).toEqual(rose); });
+it('requires at least three shared features', () => { expect(rankNeighbors({ ...rose, growthForm: '', climate: '', nativeRegions: [] }, botanicalProfiles)).toEqual([]); });
+it('excludes candidates with no positive feature matches', () => { expect(rankNeighbors(rose, [{ ...tulip, climate: 'Other' }])).toEqual([]); });

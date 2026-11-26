@@ -1,0 +1,35 @@
+# Kaynaklardan yeniden kurulabilen, yalnız localhost'a açık ekip önizlemesi.
+services:
+  api:
+    image: denoland/deno:2.9.8
+    user: "${BLOOMATLAS_UID:?UID}:${BLOOMATLAS_GID:?GID}"
+    working_dir: /workspace
+    command: [run, --allow-read=/private/preview.json, --allow-net=0.0.0.0:8000, api/src/preview.ts, /private/preview.json]
+    environment:
+      DENO_DIR: /tmp/deno
+    volumes:
+      - ../../:/workspace:ro
+      - ${BLOOMATLAS_REVIEW_SNAPSHOT:?Aday snapshot gerekli}:/private/preview.json:ro
+    ports:
+      - "127.0.0.1:18183:8000"
+  grafana:
+    image: grafana/grafana-enterprise:13.2.4-ubuntu
+    depends_on: [api]
+    ports:
+      - "127.0.0.1:3400:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: "${BLOOMATLAS_REVIEW_PASSWORD:?Parola gerekli}"
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: tugcetopuz-bloomatlasworld-panel,samirapordugan-bloomatlasstory-panel
+      GF_PLUGINS_PREINSTALL_SYNC: "yesoreyeram-infinity-datasource@3.8.0"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ../../plugins/tugcetopuz-bloomatlasworld-panel/dist:/var/lib/grafana/plugins/tugcetopuz-bloomatlasworld-panel:ro
+      - ../../plugins/samirapordugan-bloomatlasstory-panel/dist:/var/lib/grafana/plugins/samirapordugan-bloomatlasstory-panel:ro
+      - ../p1/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ../p1/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ../p2/dashboards:/var/lib/grafana/dashboards:ro
+volumes:
+  grafana_data:

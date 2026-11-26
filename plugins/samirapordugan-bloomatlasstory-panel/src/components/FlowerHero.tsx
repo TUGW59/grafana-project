@@ -4,28 +4,39 @@ import { GrafanaTheme2 } from '@grafana/data';
 import { useStyles2 } from '@grafana/ui';
 import { Observation, Species } from '../data/model';
 import { BloomTimeline } from './BloomTimeline';
+import { observationPhotoVariants } from '../utils/observationPhotoVariants';
 
 interface Props {
   species: Species;
   observation?: Observation;
   twoColumns: boolean;
+  detailPhoto?: boolean;
+  referencePhoto?: React.ReactNode;
+  hideTimeline?: boolean;
 }
 
-export const FlowerHero = ({ species, observation, twoColumns }: Props) => {
+export const FlowerHero = ({ species, observation, twoColumns, detailPhoto = false, referencePhoto, hideTimeline = false }: Props) => {
   const styles = useStyles2(getStyles);
-  const [imageFailed, setImageFailed] = useState(false);
-  const photoUrl = observation?.photoUrl;
+  // Aday modunda daha büyük aynı fotoğrafı dene. Demo davranışı değişmez.
+  const [failedPhoto, setFailedPhoto] = useState<{ key: string; urls: string[] }>({ key: '', urls: [] });
+  const original = observation?.photoUrl ?? '';
+  const photoKey = `${original}:${detailPhoto}`;
+  const failedUrls = failedPhoto.key === photoKey ? failedPhoto.urls : [];
+  const variants = detailPhoto ? observationPhotoVariants(original, true) : original ? [original] : [];
+  const photoUrl = variants.find(candidate => !failedUrls.includes(candidate));
 
   return (
     <section className={cx(styles.hero, twoColumns && styles.twoColumns)}>
-      <figure className={styles.figure}>
-        {photoUrl && !imageFailed ? (
+      {referencePhoto ?? <figure className={styles.figure}>
+        {photoUrl ? (
           <>
             <img
               className={styles.photo}
               src={photoUrl}
               alt={species.commonName}
-              onError={() => setImageFailed(true)}
+              referrerPolicy="no-referrer"
+              style={detailPhoto ? { objectFit: 'contain' } : undefined}
+              onError={() => setFailedPhoto(old => ({ key: photoKey, urls: [...(old.key === photoKey ? old.urls : []), photoUrl] }))}
             />
             <figcaption className={styles.caption}>
               {observation?.photoAttribution} ·{' '}
@@ -39,7 +50,7 @@ export const FlowerHero = ({ species, observation, twoColumns }: Props) => {
             ✿
           </div>
         )}
-      </figure>
+      </figure>}
       <div className={styles.identity}>
         <h2 className={styles.commonName}>{species.commonName}</h2>
         <p className={styles.scientificName} data-testid="scientific-name">
@@ -49,7 +60,7 @@ export const FlowerHero = ({ species, observation, twoColumns }: Props) => {
         <p className={styles.detail}>
           {observation ? `Observed in ${observation.country} on ${observation.observedAt}` : 'No observation selected'}
         </p>
-        <BloomTimeline months={species.bloomMonths} />
+        {!hideTimeline && <BloomTimeline months={species.bloomMonths} />}
       </div>
     </section>
   );
