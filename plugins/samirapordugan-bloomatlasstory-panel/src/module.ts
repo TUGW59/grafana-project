@@ -8,5 +8,10 @@ export const plugin = new PanelPlugin<StoryOptions>(SimplePanel).setPanelOptions
     name: 'Show sources',
     description: 'Show the source and license list at the bottom of the story.',
     defaultValue: true,
+  }).addBooleanSwitch({
+    path: 'demoMode',
+    name: 'Use local Story mock data',
+    description: 'Disable only when Grafana datasource queries are configured.',
+    defaultValue: true,
   });
 });

@@ -1,0 +1,7 @@
+services:
+  grafana:
+    environment:
+      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: tugcetopuz-bloomatlasworld-panel,samirapordugan-bloomatlasstory-panel
+    volumes:
+      - ${BLOOMATLAS_P2_DIR}/story-dist:/var/lib/grafana/plugins/samirapordugan-bloomatlasstory-panel:ro
+      - ${BLOOMATLAS_P2_DIR}/dashboards:/var/lib/grafana/dashboards:ro
