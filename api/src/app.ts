@@ -103,7 +103,13 @@ export function createApp(snapshot: BloomAtlasSnapshot): ApiHandler {
       if (limit === null || offset === null) {
         return error('INVALID_PAGINATION', 'limit must be 1-200; offset must be a non-negative integer', 400);
       }
-      const rawMonth = url.searchParams.get('month');
+      // Grafana tek seçimli filtrelerde __all__ değerini gönderir.
+      // Bu değer ve boş parametre, ilgili filtreyi devre dışı bırakır.
+      const filterValue = (key: string): string | null => {
+        const value = url.searchParams.get(key);
+        return value === '__all__' || value === '' ? null : value;
+      };
+      const rawMonth = filterValue('month');
       let month: number | null = null;
       if (rawMonth !== null && rawMonth !== '') {
         if (!/^(?:[1-9]|1[0-2])$/.test(rawMonth)) {
@@ -111,9 +117,9 @@ export function createApp(snapshot: BloomAtlasSnapshot): ApiHandler {
         }
         month = Number(rawMonth);
       }
-      const continent = url.searchParams.get('continent');
-      const biome = url.searchParams.get('biome');
-      const speciesId = url.searchParams.get('speciesId');
+      const continent = filterValue('continent');
+      const biome = filterValue('biome');
+      const speciesId = filterValue('speciesId');
       const items = observations.filter((x) =>
         (!continent || x.continent === continent) &&
         (!biome || x.biome === biome) &&

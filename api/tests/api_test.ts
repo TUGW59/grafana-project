@@ -67,3 +67,16 @@ Deno.test('invalid dataset cannot start the API', () => {
   try { createApp(invalid); } catch { rejected = true; }
   expect(rejected, 'invalid dataset accepted');
 });
+
+// All seçeneği ve URL kodlanmış biyom değerleri gerçek API davranışını sınar.
+Deno.test('dashboard All sentinel keeps filters optional', async () => {
+  const all = await get('/v1/observations?continent=__all__&biome=__all__&month=__all__&speciesId=__all__');
+  expect(all.status === 200 && all.body.total === 12, 'All should return 12 observations');
+  const mixed = await get('/v1/observations?continent=Europe&biome=__all__&month=6&speciesId=rosa-canina');
+  expect(mixed.status === 200 && mixed.body.total === 1, 'mixed All and AND filters failed');
+});
+Deno.test('URL encoded biome and dashboard filters are combined', async () => {
+  const r = await get('/v1/observations?continent=Europe&biome=Temperate%20forest&month=6&speciesId=rosa-canina');
+  expect(r.status === 200 && r.body.total === 1, 'encoded biome filter failed');
+  expect(r.body.items[0].speciesId === 'rosa-canina', 'wrong filtered species');
+});
