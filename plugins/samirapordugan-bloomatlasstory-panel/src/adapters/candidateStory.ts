@@ -20,7 +20,7 @@ export function candidateObservation(row: Row): Observation | undefined {
     return undefined;
   }
   const image = str(row.photoUrl);
-  return { id: str(row.id), speciesId: str(row.speciesId), latitude, longitude, observedAt: str(row.observedAt), month, country: str(row.country) || 'Unresolved', continent: str(row.continent) || 'Unresolved', photoUrl: /^https:\/\/inaturalist-open-data\.s3\.amazonaws\.com\/photos\/\d+\/(square|small|medium|large)\.jpg$/.test(image) ? image : null, photoLicense: str(row.photoLicense), photoAttribution: str(row.photoAttribution), sourceUrl };
+  return { id: str(row.id), speciesId: str(row.speciesId), latitude, longitude, observedAt: str(row.observedAt), month, country: str(row.country) || 'Unresolved', continent: str(row.continent) || 'Unresolved', photoUrl: /^https:\/\/inaturalist-open-data\.s3\.amazonaws\.com\/photos\/\d+\/(square|small|medium|large)\.(jpg|jpeg|png)$/.test(image) ? image : null, photoLicense: str(row.photoLicense), photoAttribution: str(row.photoAttribution), sourceUrl };
 }
 export function worldReturnUrl(search: string, observationId: string): string {
   const input = new URLSearchParams(search);
