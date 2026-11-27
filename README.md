@@ -47,20 +47,24 @@ flowchart LR
 
 ## Quick start
 
-Requirements: Docker Desktop (on Windows with WSL 2).
+Requirements: Docker Desktop (on Windows with WSL 2) and an internet connection for the first run.
 
 ```bash
 git clone https://github.com/TUGW59/grafana-project.git
 cd grafana-project
-docker compose up --build
+docker compose up
 ```
 
-Then open:
+The first run builds both plugins and downloads Grafana, which takes a few minutes. When Grafana is ready, open:
 
-- World Explorer: 
-- Flower Story: 
+- World Explorer: http://localhost:3400/d/bloomatlas-world-preview
+- Flower Story: http://localhost:3400/d/bloomatlas-story-preview
 
----
+Dashboards open without logging in. To edit panels, sign in as `admin` / `admin`.
+
+Stop with `Ctrl+C`, then `docker compose down`.
+
+Ports 3400 (Grafana) and 18183 (API) must be free. The WebSocket replay only works on these ports.
 
 ## How to use
 
@@ -95,8 +99,8 @@ Notes:
 
 | Bonus | What we did | Where |
 |---|---|---|
-| Datasource usage | Infinity datasource reads our Deno API | |
-| Datasource operations | Dashboard variables send continent, biome, month and species as query parameters; the API filters on the server | `api/src/app.ts`, |
+| Datasource usage | Infinity datasource reads our Deno API | `provisioning/datasources/infinity.yaml` |
+| Datasource operations | Dashboard variables send continent, biome, month and species as query parameters; the API filters on the server | `api/src/app.ts`, `dashboards/world-explorer.json` |
 | Panel operations | World: filters, hover, click, zoom, pan, focus, insights, comparison, panel options. Story: panel options (show sources, mock mode), responsive layout, gallery switching, links between the two panels | `plugins/*/src/components/` |
 | AI | Bloom Oracle: weighted nearest-neighbor similarity over family, growth form, climate and native regions, with an explanation for every result and a benchmark against a simple baseline | `plugins/samirapordugan-bloomatlasstory-panel/src/utils/bloomOracle.ts`, `oracleBenchmark.ts`, `docs/ai-evaluation.md` |
 | WebSocket | **Replay** of recorded observations, not live data. The API sends one observation every 400 ms; the map highlights it | `api/src/replay.ts`, `plugins/tugcetopuz-bloomatlasworld-panel/src/components/ObservationReplay.tsx` |

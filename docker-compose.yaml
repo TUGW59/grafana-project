@@ -1,0 +1,59 @@
+services:
+  plugins:
+    image: node:24
+    working_dir: /build
+    volumes:
+      - ./plugins:/src:ro
+      - grafana_plugins:/out
+    command:
+      - sh
+      - -ec
+      - |
+        for p in tugcetopuz-bloomatlasworld-panel samirapordugan-bloomatlasstory-panel; do
+          echo "Building $$p"
+          mkdir -p /build/$$p
+          tar -C /src/$$p --exclude=node_modules --exclude=dist -cf - . | tar -C /build/$$p -xf -
+          cd /build/$$p
+          npm ci --no-audit --no-fund
+          npm run build
+          rm -rf /out/$$p
+          cp -r dist /out/$$p
+        done
+
+  api:
+    image: denoland/deno:2.9.8
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace:ro
+    command:
+      - run
+      - --allow-read=/workspace
+      - --allow-net=0.0.0.0:8000
+      - api/src/preview.ts
+      - /workspace/data/bloomatlas.json
+    ports:
+      - "127.0.0.1:18183:8000"
+
+  grafana:
+    image: grafana/grafana-enterprise:13.2.4-ubuntu
+    depends_on:
+      plugins:
+        condition: service_completed_successfully
+      api:
+        condition: service_started
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: tugcetopuz-bloomatlasworld-panel,samirapordugan-bloomatlasstory-panel
+      GF_PLUGINS_PREINSTALL_SYNC: yesoreyeram-infinity-datasource@3.8.0
+    volumes:
+      - grafana_plugins:/var/lib/grafana/plugins
+      - ./provisioning:/etc/grafana/provisioning:ro
+      - ./dashboards:/var/lib/grafana/dashboards:ro
+    ports:
+      - "127.0.0.1:3400:3000"
+
+volumes:
+  grafana_plugins:
