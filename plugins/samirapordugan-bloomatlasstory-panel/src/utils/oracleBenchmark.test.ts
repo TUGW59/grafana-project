@@ -21,3 +21,13 @@ it('returns reference-only candidates without fabricating observations', () => {
 it('does not count a query without a genus peer in the evaluation denominator', () => {
   expect(benchmark([original[0]], [original[0].id]).queryCount).toBe(0);
 });
+
+it('reproduces the numbers reported in docs/ai-evaluation.md', () => {
+  const result = benchmark(botanicalProfiles, original.map((p) => p.id));
+  expect(result.weighted.hitAt3).toBe(1);
+  expect(result.weighted.precisionAt3).toBeCloseTo(13 / 33);
+  expect(result.weighted.mrrAt3).toBe(1);
+  expect(result.baseline.hitAt3).toBe(1);
+  expect(result.baseline.precisionAt3).toBeCloseTo(12 / 33);
+  expect(result.baseline.mrrAt3).toBeCloseTo(31 / 33);
+});
